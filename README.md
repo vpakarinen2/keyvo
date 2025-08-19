@@ -1,2 +1,2 @@
 # Keyvo
-A lightweight, open-source keyword suggestion tool.
+A lightweight, open-source keyword search tool.
