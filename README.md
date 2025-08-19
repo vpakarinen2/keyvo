@@ -1,2 +1,2 @@
-# keyvo
-lightweight, open-source keyword suggestion tool.
+# Keyvo
+A lightweight, open-source keyword suggestion tool.
