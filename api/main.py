@@ -1,5 +1,3 @@
-# api/main.py
-
 import xml.etree.ElementTree as ET
 import requests
 
@@ -61,3 +59,4 @@ async def get_keyword_suggestions(q: Optional[str] = None, gl: Optional[str] = N
         raise HTTPException(status_code=503, detail=f"Error fetching data from Google API: {e}")
     except ET.ParseError:
         raise HTTPException(status_code=500, detail=f"Error parsing XML response: {e}")
+
