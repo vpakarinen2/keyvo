@@ -23,3 +23,7 @@ A lightweight, open-source keyword suggestion tool using unofficial autocomplete
 3. Run the frontend server: ``npm run dev``
 
 **Note: You need to run both simultaneously.**
+
+## Author
+
+- Ville Pakarinen (@vpakarinen2)
