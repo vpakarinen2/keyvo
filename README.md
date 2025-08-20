@@ -2,7 +2,7 @@
 
 A lightweight, open-source keyword suggestion tool using unofficial autocomplete API.
 
-![Keyvo Application Screenshot](./keyvo-screenshot.png)
+![Keyvo Application Screenshot](./keyvo-screenshot-3.png)
 
 ## Tech Stack
 - Backend: FastAPI (Python) 
