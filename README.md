@@ -9,7 +9,7 @@ A lightweight, open-source keyword suggestion tool using unofficial autocomplete
 - Frontend: Next.js (React) & Tailwind CSS
 
 ## Getting Started
-### Backend (FastAPI)
+### Backend
 
 1. Navigate to backend directory: ``cd api``
 2. Create Python virtual env: ``python -m venv venv``
@@ -17,7 +17,7 @@ A lightweight, open-source keyword suggestion tool using unofficial autocomplete
 4. Install required dependencies: ``pip install -r requirements.txt``
 5. Run the backend server: ``uvicorn main:app --reload``
 
-### Frontend (Next.js)
+### Frontend
 1. Navigate to frontend directory: ``cd keyvo-frontend``
 2. Install required dependencies: ``npm install``
 3. Run the frontend server: ``npm run dev``
