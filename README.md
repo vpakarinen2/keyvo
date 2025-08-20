@@ -5,24 +5,62 @@ A lightweight, open-source keyword suggestion tool using unofficial autocomplete
 ![Keyvo Application Screenshot](./keyvo-screenshot-3.png)
 
 ## Tech Stack
-- Backend: FastAPI (Python) 
-- Frontend: Next.js (React) & Tailwind CSS
+* **Backend:** FastAPI (Python)
+* **Frontend:** Next.js (React) & Tailwind CSS
+
+## Prerequisites
+
+* **Python:** Version 3.8 or newer.
+* **Node.js:** Version 18.x or newer.
+* `pip` for Python package installation.
+* `npm` or `yarn` for Node.js package installation.
 
 ## Getting Started
-### Backend
 
-1. Navigate to backend directory: ``cd api``
-2. Create Python virtual env: ``python -m venv venv``
-3. Activate Python virtual env: `source venv/bin/activate` (`.\venv\Scripts\activate`)
-4. Install required dependencies: ``pip install -r requirements.txt``
-5. Run the backend server: ``uvicorn main:app --reload``
+### Backend (FastAPI)
 
-### Frontend
-1. Navigate to frontend directory: ``cd keyvo-frontend``
-2. Install required dependencies: ``npm install``
-3. Run the frontend server: ``npm run dev``
+1.  **Navigate to API directory:**
+    ```bash
+    cd api
+    ```
 
-**Note: You need to run both simultaneously.**
+2.  **Create and activate Python virtual env:**
+    ```bash
+    # Create the environment
+    python -m venv venv
+
+    # Activate on macOS/Linux
+    source venv/bin/activate
+
+    # Activate on Windows
+    .\venv\Scripts\activate
+    ```
+    
+3.  **Install the required dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Run the backend server:**
+    ```bash
+    uvicorn main:app --reload
+    ```
+### Frontend (Next.js)
+
+1.  **Navigate to frontend directory:**
+    ```bash
+    cd keyvo-frontend
+    ```
+
+2.  **Install the required dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the frontend server:**
+    ```bash
+    npm run dev
+    ```
 
 ## Support
 
