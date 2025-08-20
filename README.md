@@ -1,6 +1,8 @@
 # Keyvo
 
-Open-source keyword suggestion tool that helps you discover long-tail keywords using Google's Autocomplete API.
+A lightweight, open-source keyword suggestion tool using unofficial autocomplete API.
+
+![Keyvo Application Screenshot](./keyvo-screenshot.png)
 
 ## Tech Stack
 - Backend: FastAPI (Python) 
