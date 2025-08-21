@@ -1,6 +1,6 @@
 # Keyvo
 
-A lightweight, open-source keyword suggestion tool using unofficial autocomplete API.
+Keyword discovery tool for SEO.
 
 ![Keyvo Application Screenshot](./keyvo-screenshot-4.png)
 
