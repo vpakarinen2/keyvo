@@ -17,7 +17,7 @@ Keyword discovery tool for SEO.
 
 ## Getting Started
 
-### Backend (FastAPI)
+### Backend
 
 1.  **Navigate to API directory:**
     ```bash
@@ -45,7 +45,7 @@ Keyword discovery tool for SEO.
     ```bash
     uvicorn main:app --reload
     ```
-### Frontend (Next.js)
+### Frontend
 
 1.  **Navigate to frontend directory:**
     ```bash
