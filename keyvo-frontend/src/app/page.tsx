@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+type Platform = "google" | "youtube";
+
 const countries = [
   { name: "United States", code: "us" },
   { name: "Finland", code: "fi" },
@@ -20,6 +22,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState("us");
   const [copyButtonText, setCopyButtonText] = useState("Copy to Clipboard");
+  const [platform, setPlatform] = useState<Platform>("google");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,11 +37,15 @@ export default function HomePage() {
     setCopyButtonText("Copy to Clipboard");
 
     try {
-      const apiUrl = `http://127.0.0.1:8000/api/keywords?q=${encodeURIComponent(
+      let apiUrl = `http://127.0.0.1:8000/api/keywords?q=${encodeURIComponent(
         seedKeyword
-      )}&gl=${selectedCountry}`;
-      const response = await fetch(apiUrl);
+      )}&platform=${platform}`;
 
+      if (platform === "google") {
+        apiUrl += `&gl=${selectedCountry}`;
+      }
+
+      const response = await fetch(apiUrl);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.detail || "Something went wrong");
@@ -57,13 +64,35 @@ export default function HomePage() {
     if (results.length == 0) return;
 
     const textToCopy = results.join("\n");
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        setCopyButtonText("Copied!");
+        setTimeout(() => setCopyButtonText("Copy to Clipboard"), 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
 
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      setCopyButtonText("Copied!");
-      setTimeout(() => setCopyButtonText("Copy to Clipboard"), 2000);
-    }).catch((err) => {
-      console.error("Failed to copy text: ", err);
-    });
+  const handleExport = () => {
+    if (results.length === 0) return;
+
+    const header = "Keywords\n";
+    const csvContent = header + results.join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `keyvo_${seedKeyword.replace(/\s+/g, "_")}_export.csv`
+    );
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -73,22 +102,38 @@ export default function HomePage() {
           Keyvo
         </h1>
         <p className="text-slate-500 mb-8 text-base sm:text-lg">
-          Long-tail keyword suggestion tool
+          Keyword discovery tool for SEO
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-8">
+          <div className="flex justify-center gap-2">
+            {(["google", "youtube"] as Platform[]).map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setPlatform(p)}
+                className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+                  platform === p
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-300"
+                }`}
+              >
+                {p.charAt(0).toUpperCase() + p.slice(1)}
+              </button>
+            ))}
+          </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
               value={seedKeyword}
-              placeholder="Enter a seed keyword..."
               onChange={(e) => setSeedKeyword(e.target.value)}
-              className="flex-grow p-3 rounded-md bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-slate-900"
+              placeholder="Enter a seed keyword..."
+              className="flex-grow p-3 rounded-md bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-
             <select
               value={selectedCountry}
               onChange={(e) => setSelectedCountry(e.target.value)}
-              className="p-3 rounded-md bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              disabled={platform === "youtube"}
+              className="p-3 rounded-md bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 disabled:cursor-not-allowed"
             >
               {countries.map((country) => (
                 <option key={country.code} value={country.code}>
@@ -114,17 +159,26 @@ export default function HomePage() {
           )}
           {results.length > 0 && (
             <div className="bg-white border border-slate-200 rounded-md p-4 shadow-sm">
-              <h2 className="text-xl font-semibold mb-3">
-                Results ({results.length})
-              </h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold mb-3">
+                  Results ({results.length})
+                </h2>
 
-              <button
-                onClick={handleCopy}
-                className="px-3 py-1 text-sm rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold transition-colors"
-              >
-                {copyButtonText}
-              </button>
-
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleCopy}
+                    className="px-3 py-1 text-sm rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold transition-colors"
+                  >
+                    {copyButtonText}
+                  </button>
+                  <button
+                    onClick={handleExport}
+                    className="px-3 py-1 text-sm rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold"
+                  >
+                    Export to CSV
+                  </button>
+                </div>
+              </div>
               <ul className="space-y-2">
                 {results.map((keyword, index) => (
                   <li key={index} className="p-2 bg-slate-100 rounded-md">
