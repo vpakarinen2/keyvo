@@ -2,7 +2,7 @@
 
 Keyword discovery tool for SEO.
 
-![Keyvo Application Screenshot](./keyvo-screenshot-6.png)
+![Keyvo Application Screenshot](./keyvo-screenshot-7.png)
 
 ## Tech Stack
 * **Backend:** FastAPI (Python)
